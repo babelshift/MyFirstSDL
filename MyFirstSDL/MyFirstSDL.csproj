@@ -1,0 +1,123 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{242CD109-02D9-451B-B3C8-1486F3BC415E}</ProjectGuid>
+    <OutputType>WinExe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MyFirstSDL</RootNamespace>
+    <AssemblyName>MyFirstSDL</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>MyFirstSDL.Init</StartupObject>
+  </PropertyGroup>
+  <ItemGroup>
+    <Content Include="D:\Documents\Programming\GitHub\SharpDL-Dependencies\SDL2\libpng16-16.dll">
+      <Link>libpng16-16.dll</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="D:\Documents\Programming\GitHub\SharpDL-Dependencies\SDL2\SDL2_image.dll">
+      <Link>SDL2_image.dll</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Tile_Plain_32.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <None Include="App.config" />
+    <Content Include="D:\Documents\Programming\GitHub\SharpDL-Dependencies\SDL2#\SDL2#.dll">
+      <Link>SDL2#.dll</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="D:\Documents\Programming\GitHub\SharpDL-Dependencies\SDL2\libfreetype-6.dll">
+      <Link>libfreetype-6.dll</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="D:\Documents\Programming\GitHub\SharpDL-Dependencies\SDL2\SDL2.dll">
+      <Link>SDL2.dll</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="D:\Documents\Programming\GitHub\SharpDL-Dependencies\SDL2\SDL2_ttf.dll">
+      <Link>SDL2_ttf.dll</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="D:\Documents\Programming\GitHub\SharpDL-Dependencies\SDL2\zlib1.dll">
+      <Link>zlib1.dll</Link>
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Fonts\lazy.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="System" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Images\background.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\hello.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\image.bmp">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Init.cs" />
+    <Compile Include="MyGame.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="D:\Documents\Programming\GitHub\SharpDL\SharpDL.Events\SharpDL.Events.csproj">
+      <Project>{cbac74b4-d9cd-4e22-afc8-c9553423a6c5}</Project>
+      <Name>SharpDL.Events</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\Documents\Programming\GitHub\SharpDL\SharpDL.Graphics\SharpDL.Graphics.csproj">
+      <Project>{da5e47bc-f509-40f5-9fc7-9c94d1d70809}</Project>
+      <Name>SharpDL.Graphics</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\Documents\Programming\GitHub\SharpDL\SharpDL.Input\SharpDL.Input.csproj">
+      <Project>{91ebb67f-91dc-4721-a62e-02b39f821062}</Project>
+      <Name>SharpDL.Input</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\Documents\Programming\GitHub\SharpDL\SharpDL\SharpDL.csproj">
+      <Project>{65a37bd8-0987-4e05-a48a-cf59e4de3f41}</Project>
+      <Name>SharpDL</Name>
+    </ProjectReference>
+    <ProjectReference Include="D:\Documents\Programming\GitHub\SharpTiles\SharpTiles\SharpTiles.csproj">
+      <Project>{6e8a7fc8-22fa-4e53-90c3-197039aed323}</Project>
+      <Name>SharpTiles</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>
