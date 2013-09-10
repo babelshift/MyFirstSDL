@@ -36,41 +36,28 @@
     <StartupObject>MyFirstSDL.Init</StartupObject>
   </PropertyGroup>
   <ItemGroup>
-    <Content Include="D:\Documents\Programming\GitHub\SharpDL-Dependencies\SDL2\libpng16-16.dll">
-      <Link>libpng16-16.dll</Link>
+    <Content Include="Images\desert_tiles.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="D:\Documents\Programming\GitHub\SharpDL-Dependencies\SDL2\SDL2_image.dll">
-      <Link>SDL2_image.dll</Link>
+    <Content Include="Images\L1.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\L1_obj.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\Tile_Plain_32.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="App.config" />
-    <Content Include="D:\Documents\Programming\GitHub\SharpDL-Dependencies\SDL2#\SDL2#.dll">
-      <Link>SDL2#.dll</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="D:\Documents\Programming\GitHub\SharpDL-Dependencies\SDL2\libfreetype-6.dll">
-      <Link>libfreetype-6.dll</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="D:\Documents\Programming\GitHub\SharpDL-Dependencies\SDL2\SDL2.dll">
-      <Link>SDL2.dll</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="D:\Documents\Programming\GitHub\SharpDL-Dependencies\SDL2\SDL2_ttf.dll">
-      <Link>SDL2_ttf.dll</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="D:\Documents\Programming\GitHub\SharpDL-Dependencies\SDL2\zlib1.dll">
-      <Link>zlib1.dll</Link>
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Fonts\lazy.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Maps\desert.tmx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Maps\L1A1_Large.tmx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -87,6 +74,7 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Entity.cs" />
     <Compile Include="Init.cs" />
     <Compile Include="MyGame.cs" />
   </ItemGroup>
@@ -113,6 +101,9 @@
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy "$(SolutionDir)Libs\*.*" "$(TargetDir)"</PostBuildEvent>
+  </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

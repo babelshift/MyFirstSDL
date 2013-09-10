@@ -80,7 +80,7 @@ namespace MyFirstSDL
 			Surface tilePlainSurface = new Surface("Images/Tile_Plain_32.png", Surface.SurfaceType.PNG);
 			tilePlainImage = new Image(Renderer, tilePlainSurface, Image.ImageFormat.PNG);
 
-			map = new TiledMap("L1A1_Large.tmx", Renderer);
+			map = new TiledMap("Maps/L1A1_Large.tmx", Renderer, Directory.GetCurrentDirectory());
 		}
 
 		protected override void Update(GameTime gameTime)
