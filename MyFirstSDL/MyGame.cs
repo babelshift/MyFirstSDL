@@ -62,8 +62,19 @@ namespace MyFirstSDL
 		}
 
 		private TrueTypeText uiText;
-		private Image tilePlainImage;
-		private TiledMap map;
+		//private Image tilePlainImage;
+		//private TiledMap map;
+		private Image redImage;
+		private Image blueImage;
+		private Image greenImage;
+
+		private Sprite redSprite;
+		private Sprite blueSprite;
+		private Sprite greenSprite;
+
+		private DrawableEntity redEntity;
+		private DrawableEntity blueEntity;
+		private DrawableEntity greenEntity;
 
 		protected override void LoadContent()
 		{
@@ -77,10 +88,26 @@ namespace MyFirstSDL
 
 			//textTexture.LockTexture(fontSurface);
 
-			Surface tilePlainSurface = new Surface("Images/Tile_Plain_32.png", Surface.SurfaceType.PNG);
-			tilePlainImage = new Image(Renderer, tilePlainSurface, Image.ImageFormat.PNG);
+			//Surface tilePlainSurface = new Surface("Images/Tile_Plain_32.png", Surface.SurfaceType.PNG);
+			//tilePlainImage = new Image(Renderer, tilePlainSurface, Image.ImageFormat.PNG);
 
-			map = new TiledMap("Maps/L1A1_Large.tmx", Renderer, Directory.GetCurrentDirectory());
+			//map = new TiledMap("Maps/L1A1_Large.tmx", Renderer, Directory.GetCurrentDirectory());
+
+			Surface redSurface = new Surface("Images/redEntity.png", Surface.SurfaceType.PNG);
+			Surface blueSurface = new Surface("Images/blueEntity.png", Surface.SurfaceType.PNG);
+			Surface greenSurface = new Surface("Images/greenEntity.png", Surface.SurfaceType.PNG);
+
+			redImage = new Image(Renderer, redSurface, Image.ImageFormat.PNG);
+			blueImage = new Image(Renderer, blueSurface, Image.ImageFormat.PNG);
+			greenImage = new Image(Renderer, greenSurface, Image.ImageFormat.PNG);
+
+			redSprite = new Sprite(redImage.Texture);
+			blueSprite = new Sprite(blueImage.Texture);
+			greenSprite = new Sprite(greenImage.Texture);
+
+			redEntity = new DrawableEntity(redSprite);
+			blueEntity = new DrawableEntity(blueSprite);
+			greenEntity = new DrawableEntity(greenSprite);
 		}
 
 		protected override void Update(GameTime gameTime)
@@ -93,26 +120,30 @@ namespace MyFirstSDL
 
 			uiText.UpdateText(String.Format("X: {0}, Y: {1}", xP, yP));
 
-			if (keysPressed.Contains(KeyInformation.VirtualKeyCode.ArrowUp))
-				yP -= 10;
-			if (keysPressed.Contains(KeyInformation.VirtualKeyCode.ArrowDown))
-				yP += 10;
-			if (keysPressed.Contains(KeyInformation.VirtualKeyCode.ArrowLeft))
-				xP -= 10;
-			if (keysPressed.Contains(KeyInformation.VirtualKeyCode.ArrowRight))
-				xP += 10;
+			//if (keysPressed.Contains(KeyInformation.VirtualKeyCode.ArrowUp))
+			//	yP -= 10;
+			//if (keysPressed.Contains(KeyInformation.VirtualKeyCode.ArrowDown))
+			//	yP += 10;
+			//if (keysPressed.Contains(KeyInformation.VirtualKeyCode.ArrowLeft))
+			//	xP -= 10;
+			//if (keysPressed.Contains(KeyInformation.VirtualKeyCode.ArrowRight))
+			//	xP += 10;
 		}
 
 		protected override void Draw(GameTime gameTime)
 		{
 			Renderer.ClearScreen();
 
-			foreach (TileLayer tileLayer in map.TileLayers)
-				foreach (Tile tile in tileLayer.Tiles)
-					if (!tile.IsEmpty)
-						Renderer.RenderTexture(tile.Texture, (int)tile.Position.X, (int)tile.Position.Y, tile.SourceTextureBounds);
+			//foreach (TileLayer tileLayer in map.TileLayers)
+			//	foreach (Tile tile in tileLayer.Tiles)
+			//		if (!tile.IsEmpty)
+			//			Renderer.RenderTexture(tile.Texture, (int)tile.Position.X, (int)tile.Position.Y, tile.SourceTextureBounds);
 
 			Renderer.RenderTexture(uiText.Texture, 0, 0);
+
+			redEntity.Draw(Renderer, gameTime);
+			blueEntity.Draw(Renderer, gameTime);
+			greenEntity.Draw(Renderer, gameTime);
 
 			Renderer.RenderPresent();
 
@@ -121,9 +152,12 @@ namespace MyFirstSDL
 
 		protected override void UnloadContent()
 		{
-			map.Dispose();
-			uiText.Dispose();
-			tilePlainImage.Dispose();
+			//if (map != null)
+			//	map.Dispose();
+			if (uiText != null)
+				uiText.Dispose();
+			//if (tilePlainImage != null)
+			//	tilePlainImage.Dispose();
 		}
 	}
 }

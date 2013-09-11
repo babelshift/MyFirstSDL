@@ -36,7 +36,13 @@
     <StartupObject>MyFirstSDL.Init</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Content Include="Images\blueEntity.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\desert_tiles.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\greenEntity.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\L1.png">
@@ -45,7 +51,7 @@
     <Content Include="Images\L1_obj.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="Images\Tile_Plain_32.png">
+    <Content Include="Images\redEntity.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <None Include="App.config" />
@@ -63,20 +69,14 @@
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Images\background.bmp">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\hello.bmp">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Images\image.bmp">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
+    <Compile Include="DrawableEntity.cs" />
     <Compile Include="Entity.cs" />
+    <Compile Include="IDrawable.cs" />
     <Compile Include="Init.cs" />
+    <Compile Include="IUpdatable.cs" />
     <Compile Include="MyGame.cs" />
+    <Compile Include="Sprite.cs" />
+    <Compile Include="Utilities.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="D:\Documents\Programming\GitHub\SharpDL\SharpDL.Events\SharpDL.Events.csproj">
