@@ -1,5 +1,6 @@
 ﻿using SharpDL;
 using SharpDL.Graphics;
+using SharpDL.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,15 +16,29 @@ namespace MyFirstSDL
 		Dead
 	}
 
-	public abstract class Entity : IUpdatable
+	public abstract class Entity
 	{
 		public Guid ID { get; private set; }
-		public Vector Position { get; private set; }
+		public Vector Position { get; protected set; }
 		public EntityStatus Status { get; private set; }
 
-		public event EventHandler<EventArgs> InactivatedEvent;
-		public event EventHandler<EventArgs> ActivatedEvent;
-		public event EventHandler<EntityDeathEventArgs> DeathEvent;
+		protected Vector Speed { get; private set; }
+		protected float RadiansOfRotation { get; private set; }
+
+		private Vector Direction
+		{
+			get
+			{
+				float xCoord = (float)Math.Cos((double)RadiansOfRotation);
+				float yCoord = (float)Math.Sin((double)RadiansOfRotation);
+
+				return new Vector(xCoord, yCoord);
+			}
+		}
+
+		public event EventHandler<EventArgs> Inactivated;
+		public event EventHandler<EventArgs> Activated;
+		public event EventHandler<EntityDeathEventArgs> Death;
 
 		public Entity()
 		{
@@ -31,9 +46,29 @@ namespace MyFirstSDL
 			Status = EntityStatus.Inactive;
 		}
 
+		public Entity(Vector position, Vector speed)
+			: this()
+		{
+			Position = position;
+			Speed = speed;
+		}
+
 		public void TeleportTo(Vector position)
 		{
 			Position = position;
+		}
+
+		public virtual void Move(GameTime gameTime, IEnumerable<KeyInformation.VirtualKeyCode> keysPressed)
+		{
+			if (Status == EntityStatus.Active)
+			{
+				//RadiansOfRotation = (float)Math.Atan2((double)(currentDestination.Y - Position.Y), (double)(currentDestination.X - Position.X));
+
+				//Vector previousPosition = Position;
+				//Vector direction = Direction;
+				//double dt = gameTime.ElapsedGameTime.TotalSeconds;
+				//Position += new Vector((float)(direction.X * Speed.X * dt), (float)(direction.Y * Speed.Y * dt));
+			}
 		}
 
 		public void Activate()
@@ -74,17 +109,17 @@ namespace MyFirstSDL
 
 		private void OnInactivatedEvent(EventArgs e)
 		{
-			Utilities.RaiseEvent<EventArgs>(InactivatedEvent, this, e);
+			Utilities.RaiseEvent<EventArgs>(Inactivated, this, e);
 		}
 
 		private void OnActivatedEvent(EventArgs e)
 		{
-			Utilities.RaiseEvent<EventArgs>(ActivatedEvent, this, e);
+			Utilities.RaiseEvent<EventArgs>(Activated, this, e);
 		}
 
 		private void OnDeathEvent(EntityDeathEventArgs e)
 		{
-			Utilities.RaiseEvent<EntityDeathEventArgs>(DeathEvent, this, e);
+			Utilities.RaiseEvent<EntityDeathEventArgs>(Death, this, e);
 		}
 	}
 

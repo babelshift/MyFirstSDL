@@ -8,22 +8,39 @@ using System.Threading.Tasks;
 
 namespace MyFirstSDL
 {
-	public class Sprite : IDrawable
+	public class Sprite
 	{
-		public Texture Texture { get; private set; }
-		public int Width { get { return Texture.Width; } }
-		public int Height { get { return Texture.Height; } }
+		public Image Image { get; private set; }
+		public int Width { get { return Image.Texture.Width; } }
+		public int Height { get { return Image.Texture.Height; } }
 
 		public static Random Random = new Random();
 
-		public Sprite(Texture texture)
+		public Sprite(Image image)
 		{
-			Texture = texture;
+			Image = image;
 		}
 
-		public void Draw(Renderer renderer, GameTime gameTime)
+		public void Draw(Renderer renderer, Vector position, GameTime gameTime)
 		{
-			renderer.RenderTexture(Texture, Random.Next(0, 1200), Random.Next(0, 800));
+			renderer.RenderTexture(Image.Texture, position.X, position.Y);
+		}
+
+		public void Dispose()
+		{
+			Dispose(true);
+			GC.SuppressFinalize(this);
+		}
+
+		~Sprite()
+		{
+			Dispose(false);
+		}
+
+		private void Dispose(bool disposing)
+		{
+			if(Image != null)
+				Image.Dispose();
 		}
 	}
 }

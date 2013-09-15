@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace MyFirstSDL
 {
-	public interface IDrawable
+	public interface IDrawable : IDisposable
 	{
 		void Draw(Renderer renderer, GameTime gameTime);
 	}

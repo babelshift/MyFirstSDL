@@ -28,11 +28,11 @@ namespace MyFirstSDL
 
 		private void MyGame_MouseButtonPressed(object sender, MouseButtonEventArgs e)
 		{
-			if (e.MouseButton == MouseButtonEventArgs.MouseButtonCode.Left)
-			{
-				xP = e.RelativeToWindowX;
-				yP = e.RelativeToWindowY;
-			}
+			//if (e.MouseButton == MouseButtonEventArgs.MouseButtonCode.Left)
+			//{
+			//	xP = e.RelativeToWindowX;
+			//	yP = e.RelativeToWindowY;
+			//}
 		}
 
 		private void MyGame_MouseMoving(object sender, MouseMotionEventArgs e)
@@ -62,8 +62,11 @@ namespace MyFirstSDL
 		}
 
 		private TrueTypeText uiText;
+		private Font coordinateFont;
+		private SharpDL.Graphics.Color color = new SharpDL.Graphics.Color(255, 165, 0);
+
 		//private Image tilePlainImage;
-		//private TiledMap map;
+		private TiledMap map;
 		private Image redImage;
 		private Image blueImage;
 		private Image greenImage;
@@ -76,49 +79,81 @@ namespace MyFirstSDL
 		private DrawableEntity blueEntity;
 		private DrawableEntity greenEntity;
 
+		private PlayerEntity playerEntity;
+
+		private List<TrueTypeText> coordinateTexts = new List<TrueTypeText>();
+
 		protected override void LoadContent()
 		{
 			base.LoadContent();
 
 			string text = String.Format("X: {0}, Y: {1}", xP, yP);
-			SharpDL.Graphics.Color color = new SharpDL.Graphics.Color(255, 165, 0);
-			Font font = new Font("Fonts/lazy.ttf", 28);
+			Font font = new Font("Fonts/Arcade N.ttf", 24);
 			Surface fontSurface = new Surface(font, text, color);
 			uiText = new TrueTypeText(Renderer, fontSurface, text, font, color);
+			
+			coordinateFont = new Font("Fonts/Arcade N.ttf", 6);
+
 
 			//textTexture.LockTexture(fontSurface);
 
 			//Surface tilePlainSurface = new Surface("Images/Tile_Plain_32.png", Surface.SurfaceType.PNG);
 			//tilePlainImage = new Image(Renderer, tilePlainSurface, Image.ImageFormat.PNG);
 
-			//map = new TiledMap("Maps/L1A1_Large.tmx", Renderer, Directory.GetCurrentDirectory());
+			map = new TiledMap("Maps/test_walls.tmx", Renderer, Directory.GetCurrentDirectory());
+			
+			foreach (MapObjectLayer mapObjectLayer in map.MapObjectLayers)
+			{
+				foreach (MapObject mapObject in mapObjectLayer.MapObjects)
+				{
+					string coordinateTextString = String.Format("({0},{1})", mapObject.Bounds.Center.X, mapObject.Bounds.Center.Y);
+					Surface coordinateFontSurface = new Surface(coordinateFont, coordinateTextString, color);
+					TrueTypeText coordinateText = new TrueTypeText(Renderer, coordinateFontSurface, coordinateTextString, coordinateFont, color);
+					coordinateTexts.Add(coordinateText);
+				}
+			}
 
 			Surface redSurface = new Surface("Images/redEntity.png", Surface.SurfaceType.PNG);
-			Surface blueSurface = new Surface("Images/blueEntity.png", Surface.SurfaceType.PNG);
-			Surface greenSurface = new Surface("Images/greenEntity.png", Surface.SurfaceType.PNG);
+			//Surface blueSurface = new Surface("Images/blueEntity.png", Surface.SurfaceType.PNG);
+			//Surface greenSurface = new Surface("Images/greenEntity.png", Surface.SurfaceType.PNG);
 
 			redImage = new Image(Renderer, redSurface, Image.ImageFormat.PNG);
-			blueImage = new Image(Renderer, blueSurface, Image.ImageFormat.PNG);
-			greenImage = new Image(Renderer, greenSurface, Image.ImageFormat.PNG);
+			//blueImage = new Image(Renderer, blueSurface, Image.ImageFormat.PNG);
+			//greenImage = new Image(Renderer, greenSurface, Image.ImageFormat.PNG);
 
-			redSprite = new Sprite(redImage.Texture);
-			blueSprite = new Sprite(blueImage.Texture);
-			greenSprite = new Sprite(greenImage.Texture);
+			//redSprite = new Sprite(redImage.Texture);
+			//blueSprite = new Sprite(blueImage.Texture);
+			//greenSprite = new Sprite(greenImage.Texture);
 
-			redEntity = new DrawableEntity(redSprite);
-			blueEntity = new DrawableEntity(blueSprite);
-			greenEntity = new DrawableEntity(greenSprite);
+			Surface playerSurface = new Surface("Images/Iso_Cubes_01_32x32_Alt_00_001.png", Surface.SurfaceType.PNG);
+			Image playerImage = new Image(Renderer, playerSurface, Image.ImageFormat.PNG);
+			Sprite playerSprite = new Sprite(playerImage);
+			playerEntity = new PlayerEntity(playerSprite, Vector.Zero, new Vector(6, 3));
+			collisionManager = new CollisionManager(map.Width, map.Height);
 		}
+
+		private List<DrawableEntity> entities = new List<DrawableEntity>();
+
+		private CollisionManager collisionManager;
 
 		protected override void Update(GameTime gameTime)
 		{
 			base.Update(gameTime);
 
-			//MouseState mouseState = Mouse.GetState();
-			//xP = mouseState.X;
-			//yP = mouseState.Y;
-
 			uiText.UpdateText(String.Format("X: {0}, Y: {1}", xP, yP));
+
+			playerEntity.Move(gameTime, keysPressed);
+
+			List<ICollidable> collidables = new List<ICollidable>();
+			collidables.Add(playerEntity);
+
+			foreach (var objectLayer in map.MapObjectLayers)
+				collisionManager.HandleCollisions(objectLayer.Collidables, collidables);
+
+			playerEntity.SaveCollisionBox();
+
+			//foreach (var entity in entities)
+			//	entity.Move(gameTime);
 
 			//if (keysPressed.Contains(KeyInformation.VirtualKeyCode.ArrowUp))
 			//	yP -= 10;
@@ -134,16 +169,31 @@ namespace MyFirstSDL
 		{
 			Renderer.ClearScreen();
 
-			//foreach (TileLayer tileLayer in map.TileLayers)
-			//	foreach (Tile tile in tileLayer.Tiles)
-			//		if (!tile.IsEmpty)
-			//			Renderer.RenderTexture(tile.Texture, (int)tile.Position.X, (int)tile.Position.Y, tile.SourceTextureBounds);
+			foreach (TileLayer tileLayer in map.TileLayers)
+				foreach (Tile tile in tileLayer.Tiles)
+					if (!tile.IsEmpty)
+						Renderer.RenderTexture(tile.Texture, tile.Position.X, tile.Position.Y, tile.SourceTextureBounds);
+
+			foreach (MapObjectLayer mapObjectLayer in map.MapObjectLayers)
+			{
+				int i = 0;
+				foreach (MapObject mapObject in mapObjectLayer.MapObjects)
+				{
+					Renderer.RenderTexture(redImage.Texture, mapObject.Bounds.Center.X - redImage.Texture.Width / 2, mapObject.Bounds.Center.Y - redImage.Texture.Height / 2);
+
+					TrueTypeText coordinateText = coordinateTexts[i];
+					Renderer.RenderTexture(coordinateText.Texture, mapObject.Bounds.Center.X, mapObject.Bounds.Center.Y);
+
+					i++;
+				}
+			}
 
 			Renderer.RenderTexture(uiText.Texture, 0, 0);
 
-			redEntity.Draw(Renderer, gameTime);
-			blueEntity.Draw(Renderer, gameTime);
-			greenEntity.Draw(Renderer, gameTime);
+			playerEntity.Draw(Renderer, gameTime);
+
+			//foreach (var entity in entities)
+			//	entity.Draw(Renderer, gameTime);
 
 			Renderer.RenderPresent();
 
@@ -152,10 +202,12 @@ namespace MyFirstSDL
 
 		protected override void UnloadContent()
 		{
-			//if (map != null)
-			//	map.Dispose();
+			if (map != null)
+				map.Dispose();
 			if (uiText != null)
 				uiText.Dispose();
+			if (playerEntity != null)
+				playerEntity.Dispose();
 			//if (tilePlainImage != null)
 			//	tilePlainImage.Dispose();
 		}

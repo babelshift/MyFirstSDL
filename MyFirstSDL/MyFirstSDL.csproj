@@ -39,10 +39,19 @@
     <Content Include="Images\blueEntity.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Images\CubeTileSheet.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Images\desert_tiles.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\greenEntity.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Iso_Cubes_01_32x32_Alt_00_001.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Images\Iso_Cubes_01_64x64_Alt_00_001.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="Images\L1.png">
@@ -58,24 +67,39 @@
     <Content Include="Fonts\lazy.ttf">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <None Include="Fonts\Arcade N.ttf">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Maps\desert.tmx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Maps\L1A1_Large.tmx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
+    <None Include="Maps\test_iso.tmx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Maps\test_walls.tmx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <SubType>Designer</SubType>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CollisionManager.cs" />
     <Compile Include="DrawableEntity.cs" />
     <Compile Include="Entity.cs" />
+    <Compile Include="GridManager.cs" />
+    <Compile Include="ICollidable.cs" />
     <Compile Include="IDrawable.cs" />
     <Compile Include="Init.cs" />
     <Compile Include="IUpdatable.cs" />
     <Compile Include="MyGame.cs" />
+    <Compile Include="PlayerEntity.cs" />
     <Compile Include="Sprite.cs" />
+    <Compile Include="TiledMap.cs" />
     <Compile Include="Utilities.cs" />
   </ItemGroup>
   <ItemGroup>
