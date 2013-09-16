@@ -87,7 +87,7 @@ namespace MyFirstSDL
 		}
 	}
 
-	public class MapObject : ICollidable
+	public class MapObject
 	{
 		public string Name { get; private set; }
 		public Rectangle RawBounds { get; set; }
@@ -95,7 +95,6 @@ namespace MyFirstSDL
 		public bool IsCollidable { get; private set; }
 		public Vector Position { get { return new Vector(Bounds.X, Bounds.Y); } }
 		public Orientation Orientation { get; set; }
-		public Rectangle CollisionBox { get { return Bounds; } }
 
 		public MapObject(string name, Rectangle bounds, bool isCollidable, Orientation orientation)
 		{
@@ -104,18 +103,14 @@ namespace MyFirstSDL
 			IsCollidable = isCollidable;
 			Orientation = orientation;
 		}
-
-		public void ResolveCollision(ICollidable collidable) { }
 	}
 
 	public class MapObjectLayer
 	{
 		private List<MapObject> mapObjects = new List<MapObject>();
-		private List<ICollidable> collidables = new List<ICollidable>();
 
 		public string Name { get; private set; }
 		public IEnumerable<MapObject> MapObjects { get { return mapObjects; } }
-		public IEnumerable<ICollidable> Collidables { get { return collidables; } }
 
 		public MapObjectLayer(string name)
 		{
@@ -125,9 +120,6 @@ namespace MyFirstSDL
 		public void AddMapObject(MapObject mapObject)
 		{
 			mapObjects.Add(mapObject);
-
-			if (mapObject.IsCollidable)
-				collidables.Add(mapObject);
 		}
 	}
 

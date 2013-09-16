@@ -57,8 +57,8 @@ namespace MyFirstSDL
 		{
 			base.Initialize();
 
-			CreateWindow("Lesson 2", 100, 100, SCREEN_WIDTH, SCREEN_HEIGHT, Window.WindowFlags.Shown);
-			CreateRenderer(Renderer.RendererFlags.RendererAccelerated);
+			CreateWindow("Lesson 2", 100, 100, SCREEN_WIDTH, SCREEN_HEIGHT, WindowFlags.Shown);
+			CreateRenderer(RendererFlags.RendererAccelerated);
 		}
 
 		private TrueTypeText uiText;
@@ -129,12 +129,9 @@ namespace MyFirstSDL
 			Image playerImage = new Image(Renderer, playerSurface, Image.ImageFormat.PNG);
 			Sprite playerSprite = new Sprite(playerImage);
 			playerEntity = new PlayerEntity(playerSprite, Vector.Zero, new Vector(6, 3));
-			collisionManager = new CollisionManager(map.Width, map.Height);
 		}
 
 		private List<DrawableEntity> entities = new List<DrawableEntity>();
-
-		private CollisionManager collisionManager;
 
 		protected override void Update(GameTime gameTime)
 		{
@@ -143,14 +140,6 @@ namespace MyFirstSDL
 			uiText.UpdateText(String.Format("X: {0}, Y: {1}", xP, yP));
 
 			playerEntity.Move(gameTime, keysPressed);
-
-			List<ICollidable> collidables = new List<ICollidable>();
-			collidables.Add(playerEntity);
-
-			foreach (var objectLayer in map.MapObjectLayers)
-				collisionManager.HandleCollisions(objectLayer.Collidables, collidables);
-
-			playerEntity.SaveCollisionBox();
 
 			//foreach (var entity in entities)
 			//	entity.Move(gameTime);

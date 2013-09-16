@@ -85,18 +85,19 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Reference Include="FarseerPhysics">
+      <HintPath>C:\Users\justin\Documents\Visual Studio 2012\Projects\MySecondSDL\Libs\FarseerPhysics.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CollisionManager.cs" />
     <Compile Include="DrawableEntity.cs" />
     <Compile Include="Entity.cs" />
-    <Compile Include="GridManager.cs" />
-    <Compile Include="ICollidable.cs" />
     <Compile Include="IDrawable.cs" />
     <Compile Include="Init.cs" />
     <Compile Include="IUpdatable.cs" />
     <Compile Include="MyGame.cs" />
+    <Compile Include="PhysicsManager.cs" />
     <Compile Include="PlayerEntity.cs" />
     <Compile Include="Sprite.cs" />
     <Compile Include="TiledMap.cs" />
@@ -123,6 +124,9 @@
       <Project>{6e8a7fc8-22fa-4e53-90c3-197039aed323}</Project>
       <Name>SharpTiles</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
